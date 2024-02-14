@@ -11,6 +11,9 @@ import 'package:loggy/loggy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 main() async {
+  // Retrieve flavor argument
+  //String? flavor = appFlavor;
+
   Loggy.initLoggy(
     logPrinter: const GlobalLog(),
   );
