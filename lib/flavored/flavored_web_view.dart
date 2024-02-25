@@ -34,15 +34,15 @@ class WebViewGlobalController {
   }
 }
 
-class WebViewApp extends ConsumerStatefulWidget {
-  const WebViewApp({super.key});
-  static const String path = '/web_view';
+class FlavoredWebView extends ConsumerStatefulWidget {
+  const FlavoredWebView({super.key});
+  static const String path = '/flavored_web_view';
 
   @override
-  WebViewAppState createState() => WebViewAppState();
+  FlavoredWebViewState createState() => FlavoredWebViewState();
 }
 
-class WebViewAppState extends ConsumerState<WebViewApp> {
+class FlavoredWebViewState extends ConsumerState<FlavoredWebView> {
   late AuthInAppBrowser authBrowser;
   late Manifest manifest;
   late URLRequest _initialRequest;
@@ -197,7 +197,7 @@ class WebViewAppState extends ConsumerState<WebViewApp> {
           .evaluateJavascript(source: "document.querySelector('#login-rememberme').checked=true");
       WebViewGlobalController.value!.evaluateJavascript(
           source:
-              "document.querySelector('#account-login-form > div.form-group.field-login-rememberme').style.display='none';");
+          "document.querySelector('#account-login-form > div.form-group.field-login-rememberme').style.display='none';");
     }
     _setAjaxHeadersJQuery(controller);
     _pullToRefreshController?.endRefreshing();
@@ -216,20 +216,20 @@ class WebViewAppState extends ConsumerState<WebViewApp> {
     return kIsWeb
         ? null
         : PullToRefreshController(
-            options: _pullToRefreshOptions,
-            onRefresh: () async {
-              Uri? url = await WebViewGlobalController.value!.getUrl();
-              if (url != null) {
-                WebViewGlobalController.value!.loadUrl(
-                  urlRequest: URLRequest(
-                      url: await WebViewGlobalController.value!.getUrl(),
-                      headers: ref.read(humHubProvider).customHeaders),
-                );
-              } else {
-                WebViewGlobalController.value!.reload();
-              }
-            },
+      options: _pullToRefreshOptions,
+      onRefresh: () async {
+        Uri? url = await WebViewGlobalController.value!.getUrl();
+        if (url != null) {
+          WebViewGlobalController.value!.loadUrl(
+            urlRequest: URLRequest(
+                url: await WebViewGlobalController.value!.getUrl(),
+                headers: ref.read(humHubProvider).customHeaders),
           );
+        } else {
+          WebViewGlobalController.value!.reload();
+        }
+      },
+    );
   }
 
   askForNotificationPermissions() {

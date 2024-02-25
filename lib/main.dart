@@ -6,6 +6,8 @@ import 'package:humhub/util/log.dart';
 import 'package:loggy/loggy.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import 'flavored_app.dart';
+
 main() async {
   Loggy.initLoggy(
     logPrinter: const GlobalLog(),
@@ -22,7 +24,7 @@ main() async {
           break;
         default:
           logDebug("Package Name: ${packageInfo.packageName}");
-          runApp(const ProviderScope(child: OpenerApp()));
+          runApp(const ProviderScope(child: FlavoredApp()));
       }
     });
   });
